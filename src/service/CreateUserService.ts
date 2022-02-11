@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import {User} from '../entity/User';
+import { User } from '../entity/User';
 
 type UserRequest = {
   name: string,
@@ -16,10 +16,10 @@ export class CreateUserService {
     const repo = getRepository(User);
 
     const json = JSON.stringify(new Date());
-    const parsed = JSON.parse(json); 
+    const parsed = JSON.parse(json);
     const date = new Date(parsed);
 
-    if (await repo.findOne({name})) {
+    if (await repo.findOne({ name })) {
       return new Error('User already exists');
     }
 
@@ -27,13 +27,13 @@ export class CreateUserService {
       name,
       email,
       password,
-      created_at:date,
-      updated_at:date
+      created_at: date,
+      updated_at: date
     });
 
     await repo.save(user);
 
     return user;
   }
-  
+
 }

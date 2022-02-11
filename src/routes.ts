@@ -5,4 +5,4 @@ const routes = Router();
 
 routes.post('/create', new CreateUserController().handle);
 
-export {routes}
+export { routes }
