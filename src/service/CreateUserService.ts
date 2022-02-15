@@ -19,8 +19,8 @@ export class CreateUserService {
     const parsed = JSON.parse(json);
     const date = new Date(parsed);
 
-    if (await repo.findOne({ name })) {
-      return new Error('User already exists');
+    if (await repo.findOne({ email })) {
+      return new Error('Email already exists');
     }
 
     const user = repo.create({
