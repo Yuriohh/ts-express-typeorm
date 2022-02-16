@@ -1,5 +1,6 @@
 import { getRepository } from 'typeorm';
 import { User } from '../entity/User';
+import bcrypt from 'bcrypt';
 
 type UserRequest = {
   name: string,
@@ -15,6 +16,8 @@ export class CreateUserService {
   }: UserRequest): Promise<User | Error> {
     const repo = getRepository(User);
 
+    const hashedPassword: string = await bcrypt.hash(password, 5);
+
     const json = JSON.stringify(new Date());
     const parsed = JSON.parse(json);
     const date = new Date(parsed);
@@ -26,7 +29,7 @@ export class CreateUserService {
     const user = repo.create({
       name,
       email,
-      password,
+      password: hashedPassword,
       created_at: date,
       updated_at: date
     });
